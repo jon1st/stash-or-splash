@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stash or Splash</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== Start Screen ===== -->
+  <div id="start-screen" class="screen active">
+    <h1><span class="highlight">Stash</span> or <span class="highlight2">Splash</span></h1>
+    <p>A two-player board game about earning, saving, and spending wisely. Choose your path each season, earn money from chores, dodge chance events, and decide how much to stash away for interest!</p>
+    <div class="name-inputs">
+      <input type="text" id="p1-name" placeholder="Player 1 name" maxlength="16">
+      <input type="text" id="p2-name" placeholder="Player 2 name" maxlength="16">
+    </div>
+    <button id="start-btn" class="btn-primary">Start Game</button>
+  </div>
+
+  <!-- ===== Game Screen ===== -->
+  <div id="game-screen" class="screen">
+    <div class="top-bar">
+      <h2 id="turn-indicator">Player's Turn</h2>
+      <span id="season-badge" class="season-badge">Season 1 / 4</span>
+    </div>
+
+    <div class="players-row">
+      <div class="player-card" data-player="0">
+        <div class="name">Player 1</div>
+        <div class="balances">
+          <span><span class="label">Stash:</span> <span class="stash-val">£0</span></span>
+          <span><span class="label">Splash:</span> <span class="splash-val">£10</span></span>
+          <span><span class="label">Total:</span> <span class="total-val">£10</span></span>
+        </div>
+        <div class="path-label">Choosing path...</div>
+      </div>
+      <div class="player-card" data-player="1">
+        <div class="name">Player 2</div>
+        <div class="balances">
+          <span><span class="label">Stash:</span> <span class="stash-val">£0</span></span>
+          <span><span class="label">Splash:</span> <span class="splash-val">£10</span></span>
+          <span><span class="label">Total:</span> <span class="total-val">£10</span></span>
+        </div>
+        <div class="path-label">Choosing path...</div>
+      </div>
+    </div>
+
+    <div class="board-area">
+      <div class="board-container">
+        <div id="path-track" class="path-track">
+          <p style="color: var(--clr-muted); text-align:center; width:100%;">Choose a path to begin the season.</p>
+        </div>
+        <div class="action-panel">
+          <h3>Action</h3>
+          <div id="action-message" class="message">Choose your path to start!</div>
+          <div id="dice-display" class="dice-display">🎲</div>
+          <div class="action-buttons">
+            <button id="roll-btn" class="btn-primary" disabled>Roll Dice</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard">
+        <h3>Budget Master</h3>
+        <div id="event-log" class="event-log"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== End Screen ===== -->
+  <div id="end-screen" class="screen">
+    <h1>Game Over!</h1>
+    <h2 id="winner-text"></h2>
+    <div class="final-scores">
+      <div class="final-card" data-player="0">
+        <div class="final-name">Player 1</div>
+        <div class="final-row"><span class="lbl">Stash</span> <span class="final-stash">£0</span></div>
+        <div class="final-row"><span class="lbl">Splash</span> <span class="final-splash">£0</span></div>
+        <div class="final-total">£0</div>
+      </div>
+      <div class="final-card" data-player="1">
+        <div class="final-name">Player 2</div>
+        <div class="final-row"><span class="lbl">Stash</span> <span class="final-stash">£0</span></div>
+        <div class="final-row"><span class="lbl">Splash</span> <span class="final-splash">£0</span></div>
+        <div class="final-total">£0</div>
+      </div>
+    </div>
+    <button id="play-again-btn" class="btn-primary">Play Again</button>
+  </div>
+
+  <!-- ===== Path Choice Overlay ===== -->
+  <div id="path-overlay" class="overlay">
+    <div class="modal">
+      <h2><span id="path-player-name">Player</span>, choose your path!</h2>
+      <p>Each path has different squares. Trailblazers earn steady income; Treasure Hunters take bigger risks for bigger rewards.</p>
+      <div class="path-options">
+        <div class="path-card" data-path="trailblazer">
+          <div class="path-icon">🥾</div>
+          <h3>Trailblazer</h3>
+          <ul>
+            <li>4 Chore squares (steady income)</li>
+            <li>1 Chance square</li>
+            <li>1 Club/Activity square</li>
+          </ul>
+        </div>
+        <div class="path-card" data-path="treasure-hunter">
+          <div class="path-icon">🗺️</div>
+          <h3>Treasure Hunter</h3>
+          <ul>
+            <li>2 Chore squares</li>
+            <li>3 Chance squares (high risk!)</li>
+            <li>1 Club/Activity square</li>
+          </ul>
+        </div>
+      </div>
+      <button id="confirm-path-btn" class="btn-primary" disabled>Confirm Path</button>
+    </div>
+  </div>
+
+  <!-- ===== Stash/Splash Overlay ===== -->
+  <div id="stash-overlay" class="overlay">
+    <div class="modal stash-splash-modal">
+      <h2>Stash or Splash!</h2>
+      <p><span id="stash-player-name">Player</span>, decide how to split your Splash money.</p>
+      <div class="balance-info">
+        Available to split: <span id="stash-total-amount" class="amount">£0</span>
+      </div>
+      <p id="stash-interest-note" style="font-size:.85rem; color: var(--clr-accent);">Stashed money earns 50% interest next season!</p>
+      <div class="slider-area">
+        <label for="stash-slider">Drag to decide your split:</label>
+        <input type="range" id="stash-slider" min="0" max="100" value="50">
+        <div class="split-display">
+          <span class="stash-side">Stash: <span id="stash-amount-display">£0</span></span>
+          <span class="splash-side">Splash: <span id="splash-amount-display">£0</span></span>
+        </div>
+      </div>
+      <button id="confirm-stash-btn" class="btn-primary">Confirm Split</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
