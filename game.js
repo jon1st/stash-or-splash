@@ -123,7 +123,8 @@ function render() {
 
   // Turn indicator
   const cp = currentPlayer();
-  turnIndicator.innerHTML = `<span style="color: var(--clr-p${state.currentPlayer})">${cp.name}</span>'s Turn`;
+  turnIndicator.textContent = `${cp.name}'s Turn`;
+  turnIndicator.style.color = `var(--clr-p${state.currentPlayer})`;
 
   // Player cards
   state.players.forEach((p, i) => {
@@ -293,11 +294,12 @@ function resolveSquare(square, roll) {
     }
     case "chance": {
       const event = CHANCE_EVENTS[Math.floor(Math.random() * CHANCE_EVENTS.length)];
-      cp.splash += event.amount;
-      if (cp.splash < 0) cp.splash = 0;
-      const sign = event.amount >= 0 ? "+" : "";
-      actionMessage.textContent = `${event.icon} ${event.text} (${sign}£${event.amount})`;
-      addLog(`${event.icon} ${cp.name}: ${event.text} (${sign}£${event.amount})`, event.amount >= 0 ? "positive" : "negative");
+      const actualAmount = event.amount < 0 ? Math.max(event.amount, -cp.splash) : event.amount;
+      cp.splash += actualAmount;
+      const sign = actualAmount >= 0 ? "+" : "-";
+      const display = `${sign}£${Math.abs(actualAmount)}`;
+      actionMessage.textContent = `${event.icon} ${event.text} (${display})`;
+      addLog(`${event.icon} ${cp.name}: ${event.text} (${display})`, actualAmount >= 0 ? "positive" : "negative");
       break;
     }
     case "club": {
@@ -372,6 +374,18 @@ function showStashSplash() {
   rollBtn.style.display = "none";
   const p = state.players[state.turnStep];
   const total = p.splash;
+
+  // Auto-confirm if nothing to split
+  if (total <= 0) {
+    addLog(`${p.name} has nothing to split.`, "neutral");
+    if (state.turnStep === 0) {
+      state.turnStep = 1;
+      showStashSplash();
+    } else {
+      endSeason();
+    }
+    return;
+  }
 
   $("#stash-player-name").textContent = p.name;
   $("#stash-player-name").style.color = `var(--clr-p${state.turnStep})`;
@@ -460,7 +474,9 @@ function endGame() {
   // Apply final interest
   state.players.forEach((p) => {
     const interest = Math.floor(p.stash * STASH_INTEREST);
-    p.stash += interest;
+    if (interest > 0) {
+      p.stash += interest;
+    }
   });
 
   const totals = state.players.map((p) => p.stash + p.splash);
@@ -471,7 +487,12 @@ function endGame() {
   if (isTie) {
     $("#winner-text").innerHTML = "It's a tie!";
   } else {
-    $("#winner-text").innerHTML = `<span class="winner-name">${state.players[winnerIdx].name}</span> wins!`;
+    const winnerSpan = document.createElement("span");
+    winnerSpan.className = "winner-name";
+    winnerSpan.textContent = state.players[winnerIdx].name;
+    $("#winner-text").textContent = "";
+    $("#winner-text").appendChild(winnerSpan);
+    $("#winner-text").appendChild(document.createTextNode(" wins!"));
   }
 
   state.players.forEach((p, i) => {

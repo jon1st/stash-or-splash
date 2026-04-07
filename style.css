@@ -342,6 +342,15 @@ button:disabled { opacity: .4; cursor: default; transform: none; box-shadow: non
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(0,0,0,.3);
 }
+.slider-area input[type="range"]::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,.3);
+}
 .split-display {
   display: flex;
   justify-content: space-between;
