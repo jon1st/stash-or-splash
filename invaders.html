@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
   <title>Jon defends Claire Invasion</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="invaders.css">
@@ -21,21 +23,32 @@
   </header>
 
   <main class="invaders-main">
+    <button id="sound-toggle" class="sound-toggle" type="button" aria-label="Toggle sound" title="Toggle sound">&#128266;</button>
     <canvas id="game" width="800" height="600"></canvas>
 
     <div id="overlay" class="invaders-overlay active">
       <div class="panel">
         <h2>Jon defends <span class="claire">Claire</span></h2>
         <p class="tagline">Aliens are swarming Earth, and they're heading straight for Claire. Jon is the only one who can hold the line.</p>
-        <div class="controls">
+        <div class="controls desktop-controls">
           <div><kbd>&larr;</kbd> <kbd>&rarr;</kbd> or <kbd>A</kbd> <kbd>D</kbd> &mdash; move Jon</div>
           <div><kbd>Space</kbd> &mdash; fire</div>
           <div><kbd>P</kbd> &mdash; pause</div>
+        </div>
+        <div class="controls touch-controls-help">
+          <div>Tap and hold the on-screen buttons to move.</div>
+          <div>Tap <strong>FIRE</strong> to shoot. Tap the canvas to move Jon to that spot.</div>
         </div>
         <button id="start-btn" class="btn-primary">Start Defending</button>
       </div>
     </div>
   </main>
+
+  <div id="touch-controls" class="touch-controls" aria-hidden="true">
+    <button id="btn-left" class="tc-btn" type="button" aria-label="Move left">&larr;</button>
+    <button id="btn-fire" class="tc-btn tc-fire" type="button" aria-label="Fire">FIRE</button>
+    <button id="btn-right" class="tc-btn" type="button" aria-label="Move right">&rarr;</button>
+  </div>
 
   <script src="invaders.js"></script>
 </body>
