@@ -1,0 +1,148 @@
+/* ===== Jon defends Claire Invasion ===== */
+.invaders-body {
+  background: radial-gradient(ellipse at top, #16243a 0%, #070b14 70%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--clr-text);
+  padding: 1rem;
+}
+
+.invaders-header {
+  width: 100%;
+  max-width: 820px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .5rem;
+  margin-bottom: 1rem;
+}
+
+.invaders-header h1 {
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+  text-shadow: 0 0 12px rgba(0, 229, 160, .4);
+}
+
+.invaders-header .claire {
+  color: #ff69b4;
+  text-shadow: 0 0 14px rgba(255, 105, 180, .6);
+}
+
+.back-link {
+  align-self: flex-start;
+  color: var(--clr-muted);
+  text-decoration: none;
+  font-size: .9rem;
+}
+.back-link:hover { color: var(--clr-accent); }
+
+.hud {
+  display: flex;
+  gap: 1.4rem;
+  font-size: .95rem;
+  background: var(--clr-surface);
+  padding: .6rem 1.2rem;
+  border-radius: var(--radius);
+  border: 1px solid rgba(255,255,255,.06);
+}
+.hud strong { color: var(--clr-accent); }
+
+.invaders-main {
+  position: relative;
+  width: 100%;
+  max-width: 820px;
+}
+
+#game {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 800px;
+  aspect-ratio: 4 / 3;
+  background: #060a12;
+  border-radius: var(--radius);
+  border: 1px solid rgba(0, 229, 160, .25);
+  box-shadow: 0 0 40px rgba(0, 229, 160, .12), inset 0 0 80px rgba(0, 0, 0, .6);
+  image-rendering: pixelated;
+}
+
+.invaders-overlay {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(6, 10, 18, .85);
+  backdrop-filter: blur(4px);
+  border-radius: var(--radius);
+}
+.invaders-overlay.active { display: flex; }
+
+.invaders-overlay .panel {
+  background: var(--clr-surface);
+  padding: 2rem 2.4rem;
+  border-radius: var(--radius);
+  max-width: 480px;
+  text-align: center;
+  border: 1px solid rgba(0, 229, 160, .2);
+  box-shadow: var(--shadow);
+}
+
+.invaders-overlay h2 {
+  font-size: 1.6rem;
+  margin-bottom: .8rem;
+}
+.invaders-overlay .claire { color: #ff69b4; }
+
+.invaders-overlay .tagline {
+  color: var(--clr-muted);
+  margin-bottom: 1.2rem;
+  line-height: 1.5;
+}
+
+.controls {
+  background: var(--clr-surface2);
+  padding: 1rem;
+  border-radius: var(--radius);
+  margin-bottom: 1.2rem;
+  font-size: .9rem;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  text-align: left;
+}
+
+kbd {
+  display: inline-block;
+  padding: .15rem .5rem;
+  background: var(--clr-bg);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: .85rem;
+  box-shadow: 0 1px 0 rgba(255,255,255,.05), inset 0 -2px 0 rgba(0,0,0,.3);
+}
+
+.result-title { font-size: 1.8rem; margin-bottom: .5rem; }
+.result-title.win { color: var(--clr-accent); }
+.result-title.lose { color: var(--clr-danger); }
+
+.result-stats {
+  display: flex;
+  justify-content: space-around;
+  background: var(--clr-surface2);
+  padding: 1rem;
+  border-radius: var(--radius);
+  margin: 1rem 0 1.2rem;
+}
+.result-stats div { display: flex; flex-direction: column; gap: .2rem; }
+.result-stats .lbl { color: var(--clr-muted); font-size: .8rem; }
+.result-stats .val { font-size: 1.3rem; font-weight: 700; color: var(--clr-accent); }
+
+@media (max-width: 600px) {
+  .hud { flex-wrap: wrap; gap: .8rem; font-size: .85rem; padding: .5rem .8rem; }
+  .invaders-header h1 { font-size: 1.3rem; }
+  .invaders-overlay .panel { padding: 1.4rem; }
+}

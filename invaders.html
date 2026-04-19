@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jon defends Claire Invasion</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="invaders.css">
+</head>
+<body class="invaders-body">
+
+  <header class="invaders-header">
+    <a href="index.html" class="back-link">&larr; Back to Stash or Splash</a>
+    <h1>Jon defends <span class="claire">Claire</span> Invasion</h1>
+    <div class="hud">
+      <span>Score: <strong id="score">0</strong></span>
+      <span>Wave: <strong id="wave">1</strong></span>
+      <span>Lives: <strong id="lives">3</strong></span>
+      <span>Claire: <strong id="claire-hp">100%</strong></span>
+    </div>
+  </header>
+
+  <main class="invaders-main">
+    <canvas id="game" width="800" height="600"></canvas>
+
+    <div id="overlay" class="invaders-overlay active">
+      <div class="panel">
+        <h2>Jon defends <span class="claire">Claire</span></h2>
+        <p class="tagline">Aliens are swarming Earth, and they're heading straight for Claire. Jon is the only one who can hold the line.</p>
+        <div class="controls">
+          <div><kbd>&larr;</kbd> <kbd>&rarr;</kbd> or <kbd>A</kbd> <kbd>D</kbd> &mdash; move Jon</div>
+          <div><kbd>Space</kbd> &mdash; fire</div>
+          <div><kbd>P</kbd> &mdash; pause</div>
+        </div>
+        <button id="start-btn" class="btn-primary">Start Defending</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="invaders.js"></script>
+</body>
+</html>
